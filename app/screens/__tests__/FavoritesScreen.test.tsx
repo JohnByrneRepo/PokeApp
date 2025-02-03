@@ -21,6 +21,24 @@ describe('FavoritesScreen', () => {
     expect(getByText('No favorites added yet.')).toBeTruthy();
   });
 
+  it('displays favorite Pokémon when favorites are present', () => {
+    const mockFavorites = [
+      {
+        name: 'bulbasaur',
+        sprites: { front_default: 'bulbasaur_image_url' },
+        types: [{ type: { name: 'grass' } }],
+      },
+    ];
+
+    (useFavorites as jest.Mock).mockReturnValue({
+      favorites: mockFavorites,
+      removeFromFavorites: jest.fn(),
+    });
+
+    const { getByText } = render(<FavoritesScreen />);
+    expect(getByText('bulbasaur')).toBeTruthy();
+  });
+
   it('calls removeFromFavorites when "Remove from Favorites" button is pressed', () => {
     const mockFavorites = [
       {
